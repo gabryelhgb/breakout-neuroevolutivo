@@ -1,0 +1,27 @@
+# Java
+*.class
+build/
+target/
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# Next.js
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+
+# Configurações locais
+.env
+.env.*
+!.env.example
+
+# Editores e sistema
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
