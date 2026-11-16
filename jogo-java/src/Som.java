@@ -8,19 +8,23 @@ public class Som {
         try {
             URL url = Som.class.getResource("/audio/" + nomeArquivo);
             if (url == null) return;
-            AudioInputStream audioIn = AudioSystem.getAudioInputStream(url);
             Clip clip = AudioSystem.getClip();
-            clip.open(audioIn);
+            try (AudioInputStream audioIn = AudioSystem.getAudioInputStream(url)) {
+                clip.open(audioIn);
+            }
+            clip.addLineListener(evento -> {
+                if (evento.getType() == LineEvent.Type.STOP && clip.isOpen()) {
+                    clip.close();
+                }
+            });
 
             // Se for o som de bloco, aumenta o volume
             if (nomeArquivo.equals("bloco.wav")) {
-                FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-                volume.setValue(+2.0f);
+                ajustarVolume(clip, +2.0f);
             }
             // Se for o som de parede, aumenta o volume
             if (nomeArquivo.equals("parede.wav")) {
-                FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-                volume.setValue(-8.0f);
+                ajustarVolume(clip, -8.0f);
             }
 
             clip.start();
@@ -34,13 +38,13 @@ public class Som {
         try {
             URL url = Som.class.getResource("/audio/" + nomeArquivo);
             if (url == null) return;
-            AudioInputStream audioIn = AudioSystem.getAudioInputStream(url);
             musicaFundo = AudioSystem.getClip();
-            musicaFundo.open(audioIn);
+            try (AudioInputStream audioIn = AudioSystem.getAudioInputStream(url)) {
+                musicaFundo.open(audioIn);
+            }
 
             // Diminui o volume da música de fundo (-10.0f é mais baixo, ajuste como quiser)
-            FloatControl volume = (FloatControl) musicaFundo.getControl(FloatControl.Type.MASTER_GAIN);
-            volume.setValue(-20.0f);
+            ajustarVolume(musicaFundo, -20.0f);
 
             musicaFundo.loop(Clip.LOOP_CONTINUOUSLY);
             musicaFundo.start();
@@ -50,9 +54,17 @@ public class Som {
     }
 
     public static void pararMusicaFundo() {
-        if (musicaFundo != null && musicaFundo.isRunning()) {
+        if (musicaFundo != null) {
             musicaFundo.stop();
             musicaFundo.close();
+            musicaFundo = null;
+        }
+    }
+
+    private static void ajustarVolume(Clip clip, float ganho) {
+        if (clip.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
+            FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            volume.setValue(Math.max(volume.getMinimum(), Math.min(volume.getMaximum(), ganho)));
         }
     }
 }

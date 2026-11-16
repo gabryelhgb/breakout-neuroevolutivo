@@ -1,30 +1,7 @@
-import java.awt.*;
-import javax.swing.*;
+import javax.swing.SwingUtilities;
 
-public class Main extends JFrame {
-
+public class Main {
     public static void main(String[] args) {
-        Jogo game = new Jogo();
-
-        JFrame janelaprincipal = new JFrame("Breakout");
-
-        janelaprincipal.add(game);
-        janelaprincipal.pack();
-        janelaprincipal.setLocationRelativeTo(null); // centraliza
-        janelaprincipal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        janelaprincipal.setResizable(false);
-        janelaprincipal.setBackground(Color.black);
-        janelaprincipal.setVisible(true);
-
-        // Garante que a janela venha para frente e receba foco após estar visível
-        SwingUtilities.invokeLater(() -> {
-            janelaprincipal.toFront();
-            janelaprincipal.requestFocus();
-            game.requestFocusInWindow(); // << dá o foco a janela
-        });
-
-
-        new Thread(game).start();
-        Som.tocarMusicaFundo("musica.wav");
+        SwingUtilities.invokeLater(JanelaMotorJogo::abrir);
     }
 }

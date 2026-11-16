@@ -17,4 +17,8 @@ public class ConfiguracaoJogo {
     public final int pontosPorBloco = 10;
 
     public final int totalFases = 3;
+    public final int alturaBloco = 22;
+    public final int espacamentoBlocos = 8;
+    public final int margemLateralBlocos = 40;
+    public final int margemSuperiorBlocos = 60;
 }

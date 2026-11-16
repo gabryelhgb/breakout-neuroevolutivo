@@ -16,6 +16,7 @@ public class MotorJogo {
             );
         }
 
+        estado.eventos.clear();
         if (estado.encerrada) {
             return;
         }
@@ -52,12 +53,17 @@ public class MotorJogo {
 
             verificarParedes();
             verificarRaquete(yAnterior);
+            if (verificarBlocos() && verificarFimFase()) {
+                return;
+            }
 
             if (estado.bolaY >= configuracao.altura) {
                 estado.vidas--;
+                estado.eventos.add("vida");
 
                 if (estado.vidas <= 0) {
                     estado.encerrada = true;
+                    estado.eventos.add("perdeu");
                 } else {
                     estado.reiniciarBola();
                 }
@@ -65,6 +71,74 @@ public class MotorJogo {
                 return;
             }
         }
+    }
+
+    private boolean verificarBlocos() {
+        double tamanho = estado.configuracao.tamanhoBola;
+
+        for (BlocoPartida bloco : estado.blocos) {
+            if (!bloco.estaAtivo()) {
+                continue;
+            }
+
+            boolean sobreposicao = (
+                estado.bolaX + tamanho > bloco.x
+                && estado.bolaX < bloco.x + bloco.largura
+                && estado.bolaY + tamanho > bloco.y
+                && estado.bolaY < bloco.y + bloco.altura
+            );
+
+            if (!sobreposicao) {
+                continue;
+            }
+
+            double esquerda = estado.bolaX + tamanho - bloco.x;
+            double direita = bloco.x + bloco.largura - estado.bolaX;
+            double cima = estado.bolaY + tamanho - bloco.y;
+            double baixo = bloco.y + bloco.altura - estado.bolaY;
+
+            if (Math.min(esquerda, direita) < Math.min(cima, baixo)) {
+                estado.bolaX = esquerda < direita
+                    ? bloco.x - tamanho : bloco.x + bloco.largura;
+                estado.velocidadeBolaX *= -1;
+            } else {
+                estado.bolaY = cima < baixo
+                    ? bloco.y - tamanho : bloco.y + bloco.altura;
+                estado.velocidadeBolaY *= -1;
+            }
+
+            bloco.resistencia--;
+            estado.eventos.add("bloco");
+
+            if (!bloco.estaAtivo()) {
+                estado.pontuacao += estado.configuracao.pontosPorBloco;
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
+    private boolean verificarFimFase() {
+        for (BlocoPartida bloco : estado.blocos) {
+            if (bloco.estaAtivo()) {
+                return false;
+            }
+        }
+
+        if (estado.fase == estado.configuracao.totalFases) {
+            estado.venceu = true;
+            estado.encerrada = true;
+            estado.eventos.add("venceu");
+        } else {
+            estado.fase++;
+            estado.eventos.add("fase");
+            estado.gerarBlocos();
+            estado.reiniciarBola();
+        }
+
+        return true;
     }
 
     private void verificarParedes() {
@@ -75,11 +149,13 @@ public class MotorJogo {
         );
 
         if (estado.bolaX < 0) {
+            estado.eventos.add("parede");
             estado.bolaX = 0;
             estado.velocidadeBolaX = Math.abs(
                 estado.velocidadeBolaX
             );
         } else if (estado.bolaX > limiteDireito) {
+            estado.eventos.add("parede");
             estado.bolaX = limiteDireito;
             estado.velocidadeBolaX = -Math.abs(
                 estado.velocidadeBolaX
@@ -87,6 +163,7 @@ public class MotorJogo {
         }
 
         if (estado.bolaY < 0) {
+            estado.eventos.add("parede");
             estado.bolaY = 0;
             estado.velocidadeBolaY = Math.abs(
                 estado.velocidadeBolaY
@@ -141,6 +218,7 @@ public class MotorJogo {
             );
 
             estado.rebatidas++;
+            estado.eventos.add("raquete");
         }
     }
 }
