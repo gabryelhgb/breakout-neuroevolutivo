@@ -1,7 +1,9 @@
 import java.util.Random;
 
 public class EstadoPartida {
+
     public final ConfiguracaoJogo configuracao;
+    private final Random sorteador;
 
     public double raqueteX;
     public double raqueteY;
@@ -13,30 +15,60 @@ public class EstadoPartida {
 
     public int vidas;
     public int pontuacao;
+    public int fase;
+    public int rebatidas;
+
     public long passos;
 
     public boolean encerrada;
+    public boolean venceu;
 
-    public EstadoPartida(ConfiguracaoJogo configuracao, long semente) {
+    public EstadoPartida(
+        ConfiguracaoJogo configuracao,
+        long semente
+    ) {
         this.configuracao = configuracao;
+        this.sorteador = new Random(semente);
 
-        Random sorteador = new Random(semente);
+        raqueteX = (
+            configuracao.largura - configuracao.larguraRaquete
+        ) / 2.0;
 
-        raqueteX = (configuracao.largura - configuracao.larguraRaquete) / 2.0;
-        raqueteY = configuracao.altura - configuracao.alturaRaquete - 50;
+        raqueteY = (
+            configuracao.altura
+                - configuracao.alturaRaquete
+                - 50
+        );
 
-        bolaX = (configuracao.largura - configuracao.tamanhoBola) / 2.0;
+        vidas = configuracao.vidasIniciais;
+        pontuacao = 0;
+        fase = 1;
+        rebatidas = 0;
+        passos = 0;
+
+        encerrada = false;
+        venceu = false;
+
+        reiniciarBola();
+    }
+
+    public double obterVelocidadeBola() {
+        return configuracao.velocidadeBola
+            * (1.0 + 0.2 * (fase - 1));
+    }
+
+    public void reiniciarBola() {
+        bolaX = raqueteX
+            + configuracao.larguraRaquete / 2.0
+            - configuracao.tamanhoBola / 2.0;
+
         bolaY = raqueteY - configuracao.tamanhoBola - 10;
 
         double anguloGraus = 45 + sorteador.nextDouble() * 90;
         double anguloRadianos = Math.toRadians(anguloGraus);
+        double velocidade = obterVelocidadeBola();
 
-        velocidadeBolaX = (Math.cos(anguloRadianos) * configuracao.velocidadeBola);
-        velocidadeBolaY = -Math.sin(anguloRadianos) * configuracao.velocidadeBola;
-
-        vidas = configuracao.vidasIniciais;
-        pontuacao = 0;
-        passos = 0;
-        encerrada = false;
+        velocidadeBolaX = Math.cos(anguloRadianos) * velocidade;
+        velocidadeBolaY = -Math.sin(anguloRadianos) * velocidade;
     }
 }

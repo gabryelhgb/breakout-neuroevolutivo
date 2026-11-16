@@ -15,4 +15,6 @@ public class ConfiguracaoJogo {
     public final int linhasBlocos = 4;
     public final int colunasBlocos = 7;
     public final int pontosPorBloco = 10;
+
+    public final int totalFases = 3;
 }
