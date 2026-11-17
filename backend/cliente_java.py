@@ -31,7 +31,9 @@ class ClienteJava:
             creationflags=subprocess.CREATE_NO_WINDOW if os.name == "nt" else 0,
         )
         try:
-            self._ler_resposta()
+            resposta = self._ler_resposta()
+            if resposta.get("protocolo") != 2:
+                raise RuntimeError("Recompile o Java: o Duelo de Fortalezas usa o protocolo 2.")
         except Exception:
             self.fechar()
             raise
@@ -66,13 +68,15 @@ class ClienteJava:
             raise ValueError("A semente deve ser um inteiro de 64 bits.")
         return self._enviar(f"CRIAR {identificador} {semente}")["estado"]
 
-    def avancar(self, identificador, acao, passos=1):
+    def avancar(self, identificador, acao, passos=1, acao_adversario=0):
         self._validar_id(identificador)
         if type(acao) is not int or acao not in (-1, 0, 1):
             raise ValueError("A ação deve ser -1, 0 ou 1.")
+        if type(acao_adversario) is not int or acao_adversario not in (-1, 0, 1):
+            raise ValueError("A ação do adversário deve ser -1, 0 ou 1.")
         if type(passos) is not int or not 1 <= passos <= 1000:
             raise ValueError("Use de 1 a 1000 passos inteiros.")
-        return self._enviar(f"AVANCAR {identificador} {acao} {passos}")["estado"]
+        return self._enviar(f"AVANCAR {identificador} {acao} {acao_adversario} {passos}")["estado"]
 
     def obter_estado(self, identificador):
         self._validar_id(identificador)
