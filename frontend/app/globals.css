@@ -1,0 +1,10 @@
+*{box-sizing:border-box}body{margin:0;background:#091319;color:#f5f3e6;font:16px system-ui,sans-serif}
+main{width:min(94%,900px);margin:28px auto}h1{margin:0 0 18px;font-size:clamp(28px,6vw,48px);letter-spacing:-.04em}
+form,.controles{display:flex;gap:12px;align-items:center;flex-wrap:wrap}label{display:flex;gap:8px;align-items:center}
+button,input{font:inherit}button,input[type=number]{border:1px solid #44606c;background:#142831;color:inherit;border-radius:6px;padding:9px 12px}
+button:enabled{cursor:pointer}button:enabled:hover{background:#224553}button:disabled{opacity:.5}
+:focus-visible{outline:2px solid #65ead1;outline-offset:3px}input[type=number]{width:135px}
+.placar{display:flex;justify-content:space-between;gap:12px;margin-top:22px;font-variant-numeric:tabular-nums}
+.placar div{display:flex;align-items:center;gap:10px}.placar strong{font-size:30px}.rede-a{color:#65ead1}.rede-b{color:#ffad79;text-align:right}
+canvas{display:block;width:100%;height:auto}.controles input{flex:1;min-width:85px;accent-color:#65ead1}
+[role=alert]{color:#ffad79}
