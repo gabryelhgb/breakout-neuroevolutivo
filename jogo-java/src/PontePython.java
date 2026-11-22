@@ -25,11 +25,13 @@ public class PontePython {
                     break;
                 }
                 switch (partes[0]) {
+                    case "RAQUETES":
                     case "CRIAR": {
                         exigirQuantidade(partes, 3);
                         int id = lerId(partes[1]);
                         long semente = Long.parseLong(partes[2]);
-                        MotorDuelo motor = new MotorDuelo(new ConfiguracaoDuelo(), semente);
+                        MotorDuelo motor = new MotorDuelo(new ConfiguracaoDuelo(), semente,
+                            partes[0].equals("RAQUETES"));
                         partidas.put(id, motor);
                         saida.println(SerializadorDuelo.json(id, motor.estado));
                         break;

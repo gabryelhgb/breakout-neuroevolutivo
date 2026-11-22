@@ -23,10 +23,10 @@ def derivada_pela_saida(saida):
     return 0.5 * (1 + saida) * (1 - saida)
 
 
-def inicializar_rede(semente=42):
+def inicializar_rede(semente=42, arquitetura=ARQUITETURA):
     sorteador = random.Random(semente)
     camadas = []
-    for entradas, saidas in zip(ARQUITETURA, ARQUITETURA[1:]):
+    for entradas, saidas in zip(arquitetura, arquitetura[1:]):
         limite = math.sqrt(6 / (entradas + saidas))
         camada = []
         for _ in range(saidas):
@@ -34,7 +34,7 @@ def inicializar_rede(semente=42):
             pesos.append(0.0)
             camada.append(pesos)
         camadas.append(camada)
-    return {"arquitetura": list(ARQUITETURA), "camadas": camadas}
+    return {"arquitetura": list(arquitetura), "camadas": camadas}
 
 
 def _validar_vetor(valores, tamanho, nome):
@@ -45,21 +45,21 @@ def _validar_vetor(valores, tamanho, nome):
         raise ValueError(f"{nome} precisa conter {tamanho} números finitos.")
 
 
-def validar_rede(rede):
-    if rede.get("arquitetura") != list(ARQUITETURA):
-        raise ValueError("A rede precisa ter arquitetura 24 → 16 → 12 → 3.")
+def validar_rede(rede, arquitetura=ARQUITETURA):
+    if rede.get("arquitetura") != list(arquitetura):
+        raise ValueError("Arquitetura incompatível.")
     camadas = rede.get("camadas", [])
-    if len(camadas) != len(ARQUITETURA) - 1:
+    if len(camadas) != len(arquitetura) - 1:
         raise ValueError("Quantidade de camadas inválida.")
     for indice, camada in enumerate(camadas):
-        if len(camada) != ARQUITETURA[indice + 1]:
+        if len(camada) != arquitetura[indice + 1]:
             raise ValueError("Quantidade de neurônios inválida.")
         for neuronio in camada:
-            _validar_vetor(neuronio, ARQUITETURA[indice] + 1, "Neurônio")
+            _validar_vetor(neuronio, arquitetura[indice] + 1, "Neurônio")
 
 
 def propagar_entrada(entradas, rede):
-    _validar_vetor(entradas, ARQUITETURA[0], "Entrada")
+    _validar_vetor(entradas, rede["arquitetura"][0], "Entrada")
     valores = entradas
     ativacoes = []
     for camada in rede["camadas"]:
@@ -154,19 +154,20 @@ def calcular_eqm(amostras, rede):
 
 
 def rede_para_dna(rede):
-    validar_rede(rede)
+    validar_rede(rede, rede["arquitetura"])
     return [peso for camada in rede["camadas"] for neuronio in camada for peso in neuronio]
 
 
-def dna_para_rede(dna):
-    _validar_vetor(dna, QUANTIDADE_PESOS, "DNA")
+def dna_para_rede(dna, arquitetura=ARQUITETURA):
+    quantidade = sum((a + 1) * b for a, b in zip(arquitetura, arquitetura[1:]))
+    _validar_vetor(dna, quantidade, "DNA")
     camadas = []
     inicio = 0
-    for entradas, saidas in zip(ARQUITETURA, ARQUITETURA[1:]):
+    for entradas, saidas in zip(arquitetura, arquitetura[1:]):
         camada = []
         for _ in range(saidas):
             fim = inicio + entradas + 1
             camada.append([float(peso) for peso in dna[inicio:fim]])
             inicio = fim
         camadas.append(camada)
-    return {"arquitetura": list(ARQUITETURA), "camadas": camadas}
+    return {"arquitetura": list(arquitetura), "camadas": camadas}

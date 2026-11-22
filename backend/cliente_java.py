@@ -62,11 +62,12 @@ class ClienteJava:
         if type(identificador) is not int or not 0 <= identificador < 2000:
             raise ValueError("O identificador deve ser um inteiro de 0 a 1999.")
 
-    def criar_partida(self, identificador, semente=42):
+    def criar_partida(self, identificador, semente=42, *, raquetes=False):
         self._validar_id(identificador)
         if type(semente) is not int or not -(2**63) <= semente < 2**63:
             raise ValueError("A semente deve ser um inteiro de 64 bits.")
-        return self._enviar(f"CRIAR {identificador} {semente}")["estado"]
+        comando = "RAQUETES" if raquetes else "CRIAR"
+        return self._enviar(f"{comando} {identificador} {semente}")["estado"]
 
     def avancar(self, identificador, acao, passos=1, acao_adversario=0):
         self._validar_id(identificador)

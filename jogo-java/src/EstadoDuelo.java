@@ -48,6 +48,8 @@ public class EstadoDuelo {
     public final int[] rebatidas = new int[2];
     public final int[] bolasPerdidas = new int[2];
     public long passos;
+    public boolean modoRaquetes;
+    public final int[] pontos = new int[2];
     public boolean encerrada;
     public int vencedor = -1;
     public String motivoFim = "";

@@ -8,7 +8,9 @@ public class SerializadorDuelo {
         ConfiguracaoDuelo c = e.configuracao;
         StringBuilder j = new StringBuilder("{\"ok\":true,\"estado\":{");
         j.append("\"id\":").append(id)
-            .append(",\"tipo\":\"duelo_fortalezas\",\"protocolo\":2")
+            .append(",\"tipo\":\"").append(e.modoRaquetes ? "raquetes" : "duelo_fortalezas")
+            .append("\",\"protocolo\":2")
+            .append(",\"pontos\":[").append(e.pontos[0]).append(',').append(e.pontos[1]).append(']')
             .append(",\"passos\":").append(e.passos)
             .append(",\"encerrada\":").append(e.encerrada)
             .append(",\"vencedor\":").append(e.vencedor)

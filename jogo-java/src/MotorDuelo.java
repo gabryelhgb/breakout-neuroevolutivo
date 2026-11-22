@@ -1,8 +1,36 @@
 public class MotorDuelo {
     public final EstadoDuelo estado;
+    private final boolean raquetes;
+    private final java.util.Random sorteador;
 
     public MotorDuelo(ConfiguracaoDuelo configuracao, long semente) {
+        this(configuracao, semente, false);
+    }
+
+    public MotorDuelo(ConfiguracaoDuelo configuracao, long semente, boolean raquetes) {
         estado = new EstadoDuelo(configuracao, semente);
+        this.raquetes = raquetes;
+        sorteador = new java.util.Random(semente);
+        if (raquetes) {
+            estado.modoRaquetes = true;
+            estado.blocos.clear();
+            estado.bolas.remove(1);
+            sacar(sorteador.nextBoolean() ? 1 : -1);
+        }
+    }
+
+    private double velocidadeRaquetes() {
+        return Math.min(12.0, 6.0 + 0.75 * (estado.pontos[0] + estado.pontos[1]));
+    }
+
+    private void sacar(int direcao) {
+        EstadoDuelo.Bola bola = estado.bolas.get(0);
+        ConfiguracaoDuelo c = estado.configuracao;
+        bola.x = (c.largura - c.tamanhoBola) / 2.0;
+        bola.y = (c.topoArena + c.fundoArena - c.tamanhoBola) / 2.0;
+        double angulo = Math.toRadians(20 + sorteador.nextDouble() * 30);
+        bola.vx = Math.sin(angulo) * velocidadeRaquetes() * (sorteador.nextBoolean() ? 1 : -1);
+        bola.vy = Math.cos(angulo) * velocidadeRaquetes() * direcao;
     }
 
     public void avancar(int acaoA, int acaoB) {
@@ -20,6 +48,7 @@ public class MotorDuelo {
             if (bola.ativa) velocidadeMaxima = Math.max(velocidadeMaxima, Math.hypot(bola.vx, bola.vy));
         }
         int subpassos = Math.max(1, (int) Math.ceil(velocidadeMaxima / 2.0));
+        movimento:
         for (int i = 0; i < subpassos; i++) {
             for (EstadoDuelo.Bola bola : estado.bolas) {
                 if (!bola.ativa) continue;
@@ -28,12 +57,28 @@ public class MotorDuelo {
                 bola.y += bola.vy / subpassos;
                 verificarLaterais(bola);
                 verificarRaquete(bola, anteriorY);
+                if (raquetes) {
+                    int ponto = bola.y >= estado.configuracao.fundoArena ? 1
+                        : bola.y + estado.configuracao.tamanhoBola <= estado.configuracao.topoArena ? 0 : -1;
+                    if (ponto >= 0) {
+                        estado.pontos[ponto]++;
+                        estado.eventos.add("vida");
+                        if (estado.pontos[ponto] >= 5) encerrar(ponto, "placar");
+                        else sacar(bola.vy > 0 ? -1 : 1);
+                        break movimento;
+                    }
+                    continue;
+                }
                 verificarBlocos(bola);
                 verificarSaida(bola);
             }
         }
         // Só decide depois de atualizar ambas as bolas: perdas simultâneas são justas.
-        verificarResultado();
+        if (!raquetes) verificarResultado();
+        else if (!estado.encerrada && estado.passos >= estado.configuracao.limitePassos()) {
+            encerrar(estado.pontos[0] == estado.pontos[1] ? -1
+                : estado.pontos[0] > estado.pontos[1] ? 0 : 1, "tempo");
+        }
     }
 
     private void moverRaquete(int jogador, int acao) {
@@ -70,8 +115,9 @@ public class MotorDuelo {
             double impacto = (bola.x + tamanho / 2.0 - r.x - c.larguraRaquete / 2.0)
                 / (c.larguraRaquete / 2.0);
             double angulo = Math.toRadians(Math.max(-1, Math.min(1, impacto)) * 60);
-            bola.vx = Math.sin(angulo) * c.velocidadeBola;
-            bola.vy = Math.cos(angulo) * c.velocidadeBola * (r.id == 0 ? -1 : 1);
+            double velocidade = raquetes ? velocidadeRaquetes() : c.velocidadeBola;
+            bola.vx = Math.sin(angulo) * velocidade;
+            bola.vy = Math.cos(angulo) * velocidade * (r.id == 0 ? -1 : 1);
             estado.rebatidas[r.id]++;
             estado.eventos.add("raquete");
             return;
