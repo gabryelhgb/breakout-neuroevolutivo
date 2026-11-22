@@ -7,7 +7,8 @@ import javax.swing.*;
 public class JanelaMotorJogo extends JPanel {
     private final ConfiguracaoDuelo configuracao = new ConfiguracaoDuelo();
     private final Set<Integer> teclas = new HashSet<>();
-    private MotorDuelo motor = new MotorDuelo(configuracao, 42);
+    private MotorDuelo motor;
+    private final boolean raquetes;
     private boolean iniciado, pausado;
     private boolean referenciaB = true;
     private boolean somAtivo;
@@ -23,6 +24,13 @@ public class JanelaMotorJogo extends JPanel {
     public JanelaMotorJogo() { this(true); }
 
     public JanelaMotorJogo(boolean somInicial) {
+        this(somInicial, false);
+    }
+
+    private JanelaMotorJogo(boolean somInicial, boolean raquetes) {
+        this.raquetes = raquetes;
+        motor = new MotorDuelo(configuracao, 42, raquetes);
+        referenciaB = !raquetes;
         somAtivo = somInicial;
         passo = 1.0 / configuracao.passosPorSegundo;
         setPreferredSize(new Dimension(configuracao.largura, configuracao.altura));
@@ -41,7 +49,9 @@ public class JanelaMotorJogo extends JPanel {
             acumulado = 0;
         });
         vincular(KeyEvent.VK_R, true, this::reiniciar);
-        vincular(KeyEvent.VK_T, true, () -> { referenciaB = !referenciaB; teclas.clear(); });
+        if (!raquetes) {
+            vincular(KeyEvent.VK_T, true, () -> { referenciaB = !referenciaB; teclas.clear(); });
+        }
         vincular(KeyEvent.VK_M, true, () -> {
             somAtivo = !somAtivo;
             if (somAtivo && !motor.estado.encerrada) Som.tocarMusicaFundo("musica.wav");
@@ -67,7 +77,7 @@ public class JanelaMotorJogo extends JPanel {
     }
 
     private void reiniciar() {
-        motor = new MotorDuelo(configuracao, 42);
+        motor = new MotorDuelo(configuracao, 42, raquetes);
         iniciado = true;
         pausado = false;
         teclas.clear();
@@ -131,12 +141,13 @@ public class JanelaMotorJogo extends JPanel {
         g.drawLine(0, (configuracao.topoArena + configuracao.fundoArena) / 2,
             configuracao.largura, (configuracao.topoArena + configuracao.fundoArena) / 2);
         g.setFont(new Font("SansSerif", Font.BOLD, 16));
-        g.setColor(CIANO); g.drawString("A / SUA FORTALEZA", 24, 23);
+        g.setColor(CIANO); g.drawString(raquetes ? "A / MANUAL" : "A / SUA FORTALEZA", 24, 23);
         g.setColor(LARANJA); g.drawString(referenciaB ? "B / REFERÊNCIA" : "B / MANUAL", 740, 23);
         g.setFont(new Font("Monospaced", Font.PLAIN, 13));
-        g.setColor(TEXTO); g.drawString(e.blocosRestantes(0) + " de 6 blocos", 24, 42);
-        g.drawString(e.blocosRestantes(1) + " de 6 blocos", 740, 42);
-        g.setFont(new Font("SansSerif", Font.BOLD, 17)); centralizar(g, "DUELO DE FORTALEZAS", 22);
+        g.setColor(TEXTO); g.drawString(raquetes ? e.pontos[0] + " pontos" : e.blocosRestantes(0) + " de 6 blocos", 24, 42);
+        g.drawString(raquetes ? e.pontos[1] + " pontos" : e.blocosRestantes(1) + " de 6 blocos", 740, 42);
+        g.setFont(new Font("SansSerif", Font.BOLD, 17));
+        centralizar(g, raquetes ? "DUELO DE RAQUETES" : "DUELO DE FORTALEZAS", 22);
         g.setFont(new Font("Monospaced", Font.PLAIN, 13));
         int segundos = (int) Math.ceil(Math.max(0, configuracao.limitePassos() - e.passos)
             / (double) configuracao.passosPorSegundo);
@@ -171,22 +182,26 @@ public class JanelaMotorJogo extends JPanel {
         }
         g.setColor(new Color(139, 160, 181)); g.setFont(new Font("SansSerif", Font.PLAIN, 12));
         g.drawString("A: ←/→   |   B manual: A/D   |   ESPAÇO: iniciar/pausar   |   R: reiniciar", 24, 690);
-        g.drawString("T: B referência/manual   |   M: som " + (somAtivo ? "ligado" : "desligado")
-            + "   |   Bolas perdidas não retornam", 24, 708);
+        String controles = raquetes ? "Vence quem chegar a 5 pontos   |   " : "T: B referência/manual   |   ";
+        g.drawString(controles + "M: som " + (somAtivo ? "ligado" : "desligado"), 24, 708);
         if (!iniciado || pausado || e.encerrada) {
             g.setColor(new Color(10, 17, 30, 230)); g.fillRoundRect(220, 295, 520, 145, 12, 12);
             String titulo = e.encerrada ? (e.vencedor < 0 ? "EMPATE" : "VITÓRIA DE " + e.resultado())
-                : pausado ? "PAUSADO" : "PROTEJA SUA FORTALEZA";
+                : pausado ? "PAUSADO" : raquetes ? "PRONTOS PARA O DUELO?" : "PROTEJA SUA FORTALEZA";
             g.setFont(new Font("SansSerif", Font.BOLD, 26)); g.setColor(TEXTO); centralizar(g, titulo, 338);
             g.setFont(new Font("SansSerif", Font.PLAIN, 15)); g.setColor(CIANO);
             centralizar(g, e.encerrada ? "Pressione R para uma nova partida"
-                : pausado ? "ESPAÇO para continuar" : "ESPAÇO para iniciar · você controla a raquete de baixo", 373);
+                : pausado ? "ESPAÇO para continuar" : "ESPAÇO para iniciar", 373);
             g.setFont(new Font("SansSerif", Font.PLAIN, 12)); g.setColor(new Color(139, 160, 181));
             String detalhe = e.encerrada
                 ? (e.motivoFim.equals("fortaleza") ? "Fortaleza destruída"
                     : e.motivoFim.equals("tempo") ? "Tempo esgotado" : "As duas bolas saíram")
                     + " · blocos A: " + e.blocosRestantes(0) + " / B: " + e.blocosRestantes(1)
                 : "Duas bolas · seis blocos por lado · duelo de até 45 segundos";
+            if (raquetes) {
+                detalhe = e.encerrada ? "Placar A " + e.pontos[0] + " × " + e.pontos[1] + " B"
+                    : "A controla com ←/→ · B controla com A/D";
+            }
             centralizar(g, detalhe, 405);
         }
     }
@@ -195,9 +210,9 @@ public class JanelaMotorJogo extends JPanel {
         g.drawString(texto, (configuracao.largura - g.getFontMetrics().stringWidth(texto)) / 2, y);
     }
 
-    public static void abrir() {
-        JanelaMotorJogo painel = new JanelaMotorJogo();
-        JFrame janela = new JFrame("Breakout Neuroevolutivo - Duelo de Fortalezas");
+    public static void abrir(boolean raquetes) {
+        JanelaMotorJogo painel = new JanelaMotorJogo(true, raquetes);
+        JFrame janela = new JFrame(raquetes ? "Duelo de Raquetes" : "Duelo de Fortalezas");
         janela.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         janela.setContentPane(painel); janela.pack();
         Rectangle area = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
