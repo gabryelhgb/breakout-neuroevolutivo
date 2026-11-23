@@ -1,11 +1,21 @@
 public class ConfiguracaoJogo {
 
-    public final int largura = 960;
-    public final int altura = 720;
+    public final int largura;
+    public final int altura;
+    public final double velocidadeRaquete;
+
+    public ConfiguracaoJogo() {
+        this(960, 720, 8.0);
+    }
+
+    protected ConfiguracaoJogo(int largura, int altura, double velocidadeRaquete) {
+        this.largura = largura;
+        this.altura = altura;
+        this.velocidadeRaquete = velocidadeRaquete;
+    }
 
     public final int larguraRaquete = 120;
     public final int alturaRaquete = 14;
-    public final double velocidadeRaquete = 8.0;
 
     public final int tamanhoBola = 12;
     public final double velocidadeBola = 6.0;

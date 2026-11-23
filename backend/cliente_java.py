@@ -62,12 +62,25 @@ class ClienteJava:
         if type(identificador) is not int or not 0 <= identificador < 2000:
             raise ValueError("O identificador deve ser um inteiro de 0 a 1999.")
 
-    def criar_partida(self, identificador, semente=42, *, raquetes=False):
+    def criar_partida(self, identificador, semente=42, *, raquetes=False, regras=None, jogador=False):
         self._validar_id(identificador)
         if type(semente) is not int or not -(2**63) <= semente < 2**63:
             raise ValueError("A semente deve ser um inteiro de 64 bits.")
         comando = "RAQUETES" if raquetes else "CRIAR"
-        return self._enviar(f"{comando} {identificador} {semente}")["estado"]
+        if jogador:
+            if not raquetes:
+                raise ValueError("A partida manual exige o modo de raquetes.")
+            comando = "RAQUETES_JOGADOR"
+        comando = f"{comando} {identificador} {semente}"
+        if regras is not None:
+            duracao, pontos, velocidade, incremento = regras
+            if (not raquetes or type(duracao) is not int or type(pontos) is not int
+                    or type(velocidade) not in (int, float) or type(incremento) not in (int, float)
+                    or not (5 <= duracao <= 180 and 1 <= pontos <= 21
+                            and 3 <= velocidade <= 12 and 0 <= incremento <= 3)):
+                raise ValueError("Configuração de partida fora dos limites.")
+            comando += f" {duracao} {pontos} {velocidade} {incremento}"
+        return self._enviar(comando)["estado"]
 
     def avancar(self, identificador, acao, passos=1, acao_adversario=0):
         self._validar_id(identificador)

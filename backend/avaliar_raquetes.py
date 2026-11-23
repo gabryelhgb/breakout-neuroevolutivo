@@ -5,14 +5,15 @@ from pathlib import Path
 
 from cliente_java import ClienteJava
 from rede_neural import dna_para_rede
-from treinar_raquetes import ARQUITETURA, jogar
+from treinar_raquetes import ARQUITETURA, ARQUITETURA_ANTERIOR, jogar
 
 
 def carregar_modelo(caminho):
     dados = json.loads(caminho.read_text(encoding="utf-8"))
-    if dados.get("modo") != "raquetes" or dados.get("arquitetura") != list(ARQUITETURA):
+    arquitetura = tuple(dados.get("arquitetura", ()))
+    if dados.get("modo") != "raquetes" or arquitetura not in (ARQUITETURA, ARQUITETURA_ANTERIOR):
         raise ValueError(f"Modelo incompatível com o jogo de raquetes: {caminho}")
-    return dna_para_rede(dados["dna"], ARQUITETURA)
+    return dna_para_rede(dados["dna"], arquitetura)
 
 
 def comparar(cliente, candidata, referencia, sementes):

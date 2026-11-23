@@ -55,11 +55,16 @@ public class EstadoDuelo {
     public String motivoFim = "";
 
     public EstadoDuelo(ConfiguracaoDuelo configuracao, long semente) {
+        this(configuracao, semente, false);
+    }
+
+    public EstadoDuelo(ConfiguracaoDuelo configuracao, long semente, boolean raquetesAfastadas) {
         this.configuracao = configuracao;
+        int recuo = raquetesAfastadas ? 28 : 92;
         double centroX = (configuracao.largura - configuracao.larguraRaquete) / 2.0;
         raquetes.add(new Raquete(0, centroX,
-            configuracao.fundoArena - 92 - configuracao.alturaRaquete));
-        raquetes.add(new Raquete(1, centroX, configuracao.topoArena + 92));
+            configuracao.fundoArena - recuo - configuracao.alturaRaquete));
+        raquetes.add(new Raquete(1, centroX, configuracao.topoArena + recuo));
 
         double largura = configuracao.largura / (double) configuracao.blocosPorLado;
         for (int jogador = 0; jogador < 2; jogador++) {

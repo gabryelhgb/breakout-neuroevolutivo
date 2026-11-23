@@ -1,0 +1,550 @@
+{
+  "triagem": [
+    {
+      "grupo": "s",
+      "semente_treino": 42,
+      "geracao": 5,
+      "partidas": 8,
+      "vitorias": 7,
+      "empates": 1,
+      "pontos_feitos": 19,
+      "pontos_sofridos": 8,
+      "rebatidas": 10,
+      "taxa_rebatidas": 0.5556
+    },
+    {
+      "grupo": "s",
+      "semente_treino": 42,
+      "geracao": 10,
+      "partidas": 8,
+      "vitorias": 8,
+      "empates": 0,
+      "pontos_feitos": 16,
+      "pontos_sofridos": 3,
+      "rebatidas": 13,
+      "taxa_rebatidas": 0.8125
+    },
+    {
+      "grupo": "s",
+      "semente_treino": 42,
+      "geracao": 14,
+      "partidas": 8,
+      "vitorias": 8,
+      "empates": 0,
+      "pontos_feitos": 17,
+      "pontos_sofridos": 4,
+      "rebatidas": 13,
+      "taxa_rebatidas": 0.7647
+    },
+    {
+      "grupo": "s",
+      "semente_treino": 42,
+      "geracao": 18,
+      "partidas": 8,
+      "vitorias": 7,
+      "empates": 1,
+      "pontos_feitos": 18,
+      "pontos_sofridos": 7,
+      "rebatidas": 13,
+      "taxa_rebatidas": 0.65
+    },
+    {
+      "grupo": "s",
+      "semente_treino": 7,
+      "geracao": 5,
+      "partidas": 8,
+      "vitorias": 7,
+      "empates": 1,
+      "pontos_feitos": 17,
+      "pontos_sofridos": 8,
+      "rebatidas": 10,
+      "taxa_rebatidas": 0.5556
+    },
+    {
+      "grupo": "s",
+      "semente_treino": 7,
+      "geracao": 10,
+      "partidas": 8,
+      "vitorias": 2,
+      "empates": 5,
+      "pontos_feitos": 21,
+      "pontos_sofridos": 20,
+      "rebatidas": 3,
+      "taxa_rebatidas": 0.1304
+    },
+    {
+      "grupo": "s",
+      "semente_treino": 7,
+      "geracao": 14,
+      "partidas": 8,
+      "vitorias": 7,
+      "empates": 1,
+      "pontos_feitos": 18,
+      "pontos_sofridos": 8,
+      "rebatidas": 10,
+      "taxa_rebatidas": 0.5556
+    },
+    {
+      "grupo": "s",
+      "semente_treino": 7,
+      "geracao": 18,
+      "partidas": 8,
+      "vitorias": 8,
+      "empates": 0,
+      "pontos_feitos": 16,
+      "pontos_sofridos": 2,
+      "rebatidas": 15,
+      "taxa_rebatidas": 0.8824
+    },
+    {
+      "grupo": "s",
+      "semente_treino": 123,
+      "geracao": 5,
+      "partidas": 8,
+      "vitorias": 4,
+      "empates": 4,
+      "pontos_feitos": 20,
+      "pontos_sofridos": 15,
+      "rebatidas": 6,
+      "taxa_rebatidas": 0.2857
+    },
+    {
+      "grupo": "s",
+      "semente_treino": 123,
+      "geracao": 10,
+      "partidas": 8,
+      "vitorias": 7,
+      "empates": 1,
+      "pontos_feitos": 19,
+      "pontos_sofridos": 8,
+      "rebatidas": 10,
+      "taxa_rebatidas": 0.5556
+    },
+    {
+      "grupo": "s",
+      "semente_treino": 123,
+      "geracao": 14,
+      "partidas": 8,
+      "vitorias": 5,
+      "empates": 3,
+      "pontos_feitos": 19,
+      "pontos_sofridos": 13,
+      "rebatidas": 8,
+      "taxa_rebatidas": 0.381
+    },
+    {
+      "grupo": "s",
+      "semente_treino": 123,
+      "geracao": 18,
+      "partidas": 8,
+      "vitorias": 7,
+      "empates": 1,
+      "pontos_feitos": 21,
+      "pontos_sofridos": 9,
+      "rebatidas": 11,
+      "taxa_rebatidas": 0.55
+    },
+    {
+      "grupo": "d",
+      "semente_treino": 42,
+      "geracao": 1,
+      "partidas": 8,
+      "vitorias": 7,
+      "empates": 1,
+      "pontos_feitos": 20,
+      "pontos_sofridos": 10,
+      "rebatidas": 10,
+      "taxa_rebatidas": 0.5
+    },
+    {
+      "grupo": "d",
+      "semente_treino": 42,
+      "geracao": 5,
+      "partidas": 8,
+      "vitorias": 7,
+      "empates": 1,
+      "pontos_feitos": 17,
+      "pontos_sofridos": 6,
+      "rebatidas": 12,
+      "taxa_rebatidas": 0.6667
+    },
+    {
+      "grupo": "d",
+      "semente_treino": 42,
+      "geracao": 10,
+      "partidas": 8,
+      "vitorias": 7,
+      "empates": 1,
+      "pontos_feitos": 10,
+      "pontos_sofridos": 0,
+      "rebatidas": 14,
+      "taxa_rebatidas": 1.0
+    },
+    {
+      "grupo": "d",
+      "semente_treino": 42,
+      "geracao": 15,
+      "partidas": 8,
+      "vitorias": 7,
+      "empates": 1,
+      "pontos_feitos": 13,
+      "pontos_sofridos": 0,
+      "rebatidas": 15,
+      "taxa_rebatidas": 1.0
+    },
+    {
+      "grupo": "d",
+      "semente_treino": 42,
+      "geracao": 20,
+      "partidas": 8,
+      "vitorias": 7,
+      "empates": 1,
+      "pontos_feitos": 12,
+      "pontos_sofridos": 0,
+      "rebatidas": 15,
+      "taxa_rebatidas": 1.0
+    },
+    {
+      "grupo": "d",
+      "semente_treino": 7,
+      "geracao": 1,
+      "partidas": 8,
+      "vitorias": 5,
+      "empates": 3,
+      "pontos_feitos": 20,
+      "pontos_sofridos": 12,
+      "rebatidas": 10,
+      "taxa_rebatidas": 0.4545
+    },
+    {
+      "grupo": "d",
+      "semente_treino": 7,
+      "geracao": 5,
+      "partidas": 8,
+      "vitorias": 6,
+      "empates": 2,
+      "pontos_feitos": 15,
+      "pontos_sofridos": 7,
+      "rebatidas": 12,
+      "taxa_rebatidas": 0.6316
+    },
+    {
+      "grupo": "d",
+      "semente_treino": 7,
+      "geracao": 10,
+      "partidas": 8,
+      "vitorias": 7,
+      "empates": 1,
+      "pontos_feitos": 12,
+      "pontos_sofridos": 0,
+      "rebatidas": 15,
+      "taxa_rebatidas": 1.0
+    },
+    {
+      "grupo": "d",
+      "semente_treino": 7,
+      "geracao": 15,
+      "partidas": 8,
+      "vitorias": 7,
+      "empates": 1,
+      "pontos_feitos": 10,
+      "pontos_sofridos": 0,
+      "rebatidas": 14,
+      "taxa_rebatidas": 1.0
+    },
+    {
+      "grupo": "d",
+      "semente_treino": 7,
+      "geracao": 20,
+      "partidas": 8,
+      "vitorias": 8,
+      "empates": 0,
+      "pontos_feitos": 15,
+      "pontos_sofridos": 0,
+      "rebatidas": 16,
+      "taxa_rebatidas": 1.0
+    },
+    {
+      "grupo": "d",
+      "semente_treino": 123,
+      "geracao": 1,
+      "partidas": 8,
+      "vitorias": 5,
+      "empates": 3,
+      "pontos_feitos": 19,
+      "pontos_sofridos": 12,
+      "rebatidas": 10,
+      "taxa_rebatidas": 0.4545
+    },
+    {
+      "grupo": "d",
+      "semente_treino": 123,
+      "geracao": 5,
+      "partidas": 8,
+      "vitorias": 7,
+      "empates": 1,
+      "pontos_feitos": 18,
+      "pontos_sofridos": 8,
+      "rebatidas": 10,
+      "taxa_rebatidas": 0.5556
+    },
+    {
+      "grupo": "d",
+      "semente_treino": 123,
+      "geracao": 10,
+      "partidas": 8,
+      "vitorias": 8,
+      "empates": 0,
+      "pontos_feitos": 15,
+      "pontos_sofridos": 2,
+      "rebatidas": 16,
+      "taxa_rebatidas": 0.8889
+    },
+    {
+      "grupo": "d",
+      "semente_treino": 123,
+      "geracao": 15,
+      "partidas": 8,
+      "vitorias": 6,
+      "empates": 2,
+      "pontos_feitos": 10,
+      "pontos_sofridos": 0,
+      "rebatidas": 14,
+      "taxa_rebatidas": 1.0
+    },
+    {
+      "grupo": "d",
+      "semente_treino": 123,
+      "geracao": 20,
+      "partidas": 8,
+      "vitorias": 7,
+      "empates": 1,
+      "pontos_feitos": 10,
+      "pontos_sofridos": 0,
+      "rebatidas": 14,
+      "taxa_rebatidas": 1.0
+    }
+  ],
+  "validacao-antiga": [
+    {
+      "modelo": "d7/geracao-0020.json",
+      "partidas": 24,
+      "vitorias": 22,
+      "empates": 2,
+      "pontos_feitos": 41,
+      "pontos_sofridos": 0,
+      "rebatidas": 46,
+      "taxa_rebatidas": 1.0
+    },
+    {
+      "modelo": "d42/geracao-0020.json",
+      "partidas": 24,
+      "vitorias": 22,
+      "empates": 2,
+      "pontos_feitos": 41,
+      "pontos_sofridos": 1,
+      "rebatidas": 45,
+      "taxa_rebatidas": 0.9783
+    },
+    {
+      "modelo": "d123/geracao-0020.json",
+      "partidas": 24,
+      "vitorias": 22,
+      "empates": 2,
+      "pontos_feitos": 34,
+      "pontos_sofridos": 3,
+      "rebatidas": 41,
+      "taxa_rebatidas": 0.9318
+    },
+    {
+      "modelo": "anterior-geracao-100",
+      "partidas": 24,
+      "vitorias": 7,
+      "empates": 10,
+      "pontos_feitos": 35,
+      "pontos_sofridos": 35,
+      "rebatidas": 14,
+      "taxa_rebatidas": 0.2857
+    }
+  ],
+  "validacao-parada": [
+    {
+      "modelo": "d7/geracao-0020.json",
+      "partidas": 24,
+      "vitorias": 24,
+      "empates": 0,
+      "pontos_feitos": 46,
+      "pontos_sofridos": 0,
+      "rebatidas": 48,
+      "taxa_rebatidas": 1.0
+    },
+    {
+      "modelo": "d42/geracao-0020.json",
+      "partidas": 24,
+      "vitorias": 23,
+      "empates": 1,
+      "pontos_feitos": 38,
+      "pontos_sofridos": 0,
+      "rebatidas": 48,
+      "taxa_rebatidas": 1.0
+    },
+    {
+      "modelo": "d123/geracao-0020.json",
+      "partidas": 24,
+      "vitorias": 22,
+      "empates": 2,
+      "pontos_feitos": 34,
+      "pontos_sofridos": 0,
+      "rebatidas": 47,
+      "taxa_rebatidas": 1.0
+    },
+    {
+      "modelo": "anterior-geracao-100",
+      "partidas": 24,
+      "vitorias": 7,
+      "empates": 10,
+      "pontos_feitos": 79,
+      "pontos_sofridos": 79,
+      "rebatidas": 0,
+      "taxa_rebatidas": 0.0
+    }
+  ],
+  "validacao-reflexo": [
+    {
+      "modelo": "d7/geracao-0020.json",
+      "partidas": 24,
+      "vitorias": 0,
+      "empates": 24,
+      "pontos_feitos": 0,
+      "pontos_sofridos": 0,
+      "rebatidas": 36,
+      "taxa_rebatidas": 1.0
+    },
+    {
+      "modelo": "d42/geracao-0020.json",
+      "partidas": 24,
+      "vitorias": 0,
+      "empates": 21,
+      "pontos_feitos": 0,
+      "pontos_sofridos": 3,
+      "rebatidas": 36,
+      "taxa_rebatidas": 0.9231
+    },
+    {
+      "modelo": "d123/geracao-0020.json",
+      "partidas": 24,
+      "vitorias": 0,
+      "empates": 24,
+      "pontos_feitos": 0,
+      "pontos_sofridos": 0,
+      "rebatidas": 35,
+      "taxa_rebatidas": 1.0
+    },
+    {
+      "modelo": "anterior-geracao-100",
+      "partidas": 24,
+      "vitorias": 0,
+      "empates": 4,
+      "pontos_feitos": 0,
+      "pontos_sofridos": 33,
+      "rebatidas": 11,
+      "taxa_rebatidas": 0.25
+    }
+  ],
+  "validacao-reflexo10": [
+    {
+      "modelo": "d7/geracao-0020.json",
+      "partidas": 24,
+      "vitorias": 0,
+      "empates": 12,
+      "pontos_feitos": 0,
+      "pontos_sofridos": 21,
+      "rebatidas": 111,
+      "taxa_rebatidas": 0.8409
+    },
+    {
+      "modelo": "d42/geracao-0020.json",
+      "partidas": 24,
+      "vitorias": 0,
+      "empates": 0,
+      "pontos_feitos": 15,
+      "pontos_sofridos": 97,
+      "rebatidas": 46,
+      "taxa_rebatidas": 0.3217
+    },
+    {
+      "modelo": "d123/geracao-0020.json",
+      "partidas": 24,
+      "vitorias": 0,
+      "empates": 1,
+      "pontos_feitos": 3,
+      "pontos_sofridos": 67,
+      "rebatidas": 75,
+      "taxa_rebatidas": 0.5282
+    },
+    {
+      "modelo": "anterior-geracao-100",
+      "partidas": 24,
+      "vitorias": 0,
+      "empates": 0,
+      "pontos_feitos": 10,
+      "pontos_sofridos": 112,
+      "rebatidas": 19,
+      "taxa_rebatidas": 0.145
+    }
+  ],
+  "validacao-reflexo7": [
+    {
+      "modelo": "d7/geracao-0020.json",
+      "partidas": 24,
+      "vitorias": 0,
+      "empates": 24,
+      "pontos_feitos": 0,
+      "pontos_sofridos": 0,
+      "rebatidas": 96,
+      "taxa_rebatidas": 1.0
+    },
+    {
+      "modelo": "d42/geracao-0020.json",
+      "partidas": 24,
+      "vitorias": 0,
+      "empates": 7,
+      "pontos_feitos": 0,
+      "pontos_sofridos": 26,
+      "rebatidas": 70,
+      "taxa_rebatidas": 0.7292
+    },
+    {
+      "modelo": "d123/geracao-0020.json",
+      "partidas": 24,
+      "vitorias": 0,
+      "empates": 20,
+      "pontos_feitos": 0,
+      "pontos_sofridos": 4,
+      "rebatidas": 79,
+      "taxa_rebatidas": 0.9518
+    },
+    {
+      "modelo": "anterior-geracao-100",
+      "partidas": 24,
+      "vitorias": 0,
+      "empates": 0,
+      "pontos_feitos": 0,
+      "pontos_sofridos": 104,
+      "rebatidas": 17,
+      "taxa_rebatidas": 0.1405
+    }
+  ],
+  "final-90s": [
+    {
+      "modelo": "modelo_validado.json",
+      "partidas": 16,
+      "vitorias": 0,
+      "empates": 16,
+      "pontos_feitos": 0,
+      "pontos_sofridos": 0,
+      "rebatidas": 185,
+      "taxa_rebatidas": 1.0
+    }
+  ]
+}

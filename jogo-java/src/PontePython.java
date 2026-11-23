@@ -25,13 +25,20 @@ public class PontePython {
                     break;
                 }
                 switch (partes[0]) {
+                    case "RAQUETES_JOGADOR":
                     case "RAQUETES":
                     case "CRIAR": {
-                        exigirQuantidade(partes, 3);
+                        boolean raquetes = !partes[0].equals("CRIAR");
+                        boolean jogador = partes[0].equals("RAQUETES_JOGADOR");
+                        boolean personalizado = raquetes && partes.length == 7;
+                        exigirQuantidade(partes, personalizado ? 7 : 3);
                         int id = lerId(partes[1]);
                         long semente = Long.parseLong(partes[2]);
-                        MotorDuelo motor = new MotorDuelo(new ConfiguracaoDuelo(), semente,
-                            partes[0].equals("RAQUETES"));
+                        ConfiguracaoDuelo configuracao = personalizado
+                            ? new ConfiguracaoDuelo(Integer.parseInt(partes[3]), Integer.parseInt(partes[4]),
+                                Double.parseDouble(partes[5]), Double.parseDouble(partes[6]), true)
+                            : raquetes ? ConfiguracaoDuelo.paraRaquetes() : new ConfiguracaoDuelo();
+                        MotorDuelo motor = new MotorDuelo(configuracao, semente, raquetes, jogador);
                         partidas.put(id, motor);
                         saida.println(SerializadorDuelo.json(id, motor.estado));
                         break;

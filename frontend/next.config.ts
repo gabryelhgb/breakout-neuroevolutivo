@@ -4,7 +4,10 @@ const config: NextConfig = {
   devIndicators: false,
   agentRules: false,
   async rewrites() {
-    return [{ source: "/partida", destination: "http://127.0.0.1:8006/partida" }];
+    const backend = process.env.RAQUETES_API ?? "http://127.0.0.1:8006";
+    return ["/partida", "/arenas", "/modelos", "/torneio", "/jogar/:acao", "/treino/:acao"].map(source => ({
+      source, destination: backend + source,
+    }));
   },
 };
 
